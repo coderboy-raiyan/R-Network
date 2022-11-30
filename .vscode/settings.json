@@ -22,5 +22,5 @@
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },
-  "cSpell.words": ["abouts", "Middlewares"]
+  "cSpell.words": ["abouts", "fullname", "maxlength", "Middlewares"]
 }
