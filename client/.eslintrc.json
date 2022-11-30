@@ -39,7 +39,10 @@
         "react/react-in-jsx-scope": 0,
         "react/jsx-uses-react": 0,
         "no-shadow": 0,
-        "react/jsx-no-useless-fragment": 0
+        "react/jsx-no-useless-fragment": 0,
+        "import/no-extraneous-dependencies": 0,
+        "global-require": 0,
+        "import/no-dynamic-require": 0
     },
     "settings": {
         "import/resolver": {
