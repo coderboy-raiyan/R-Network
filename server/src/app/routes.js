@@ -4,6 +4,6 @@ const routes = require('../routes');
 router.get('/health', (req, res) => {
     res.status(200).json({ message: 'Server is Healthy' });
 });
-router.use(routes);
+router.use('/api', routes);
 
 module.exports = router;
