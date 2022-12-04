@@ -10,8 +10,4 @@ const server = http.createServer(app);
 connectDb();
 colors.enable();
 
-app.get('/', (req, res) => {
-    res.send({ message: "Please go to '/graphql'" });
-});
-
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

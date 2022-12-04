@@ -1,11 +1,17 @@
 const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+const routes = require('./routes');
+const middlewares = require('./middleware');
+const errorHandlers = require('./error');
 
 const app = express();
 
-app.use(express.json());
-app.use(cors({ origin: ['http://localhost:5000'] }));
-app.use(morgan('dev'));
+// Middlewares
+app.use(middlewares);
+
+// Routers
+app.use(routes);
+
+// Error Handler
+app.use(errorHandlers);
 
 module.exports = app;

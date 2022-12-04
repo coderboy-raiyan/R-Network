@@ -6,13 +6,13 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            maxlength: 25,
+            maxLength: 25,
         },
         username: {
             type: String,
             required: true,
             trim: true,
-            maxlength: 25,
+            maxLength: 25,
             unique: true,
         },
         email: {
@@ -49,7 +49,7 @@ const userSchema = mongoose.Schema(
         story: {
             type: String,
             default: '',
-            maxlength: 200,
+            maxLength: 200,
         },
         website: {
             type: String,
