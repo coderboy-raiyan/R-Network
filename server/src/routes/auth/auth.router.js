@@ -1,8 +1,8 @@
 const authRouter = require('express').Router();
-const { register } = require('./auth.controller');
+const { register, login } = require('./auth.controller');
 
 authRouter.post('/register', register);
-// authRouter.post('/login');
+authRouter.post('/login', login);
 // authRouter.post('/logout');
 // authRouter.post('/refresh_token');
 
