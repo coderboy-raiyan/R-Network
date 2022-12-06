@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require('../../lib/jwt');
 const createAsyncError = require('../../middlewares/createAsyncError');
 const User = require('../../models/User.model');
@@ -46,13 +47,13 @@ const register = createAsyncError(async (req, res) => {
 
     res.cookie('refreshToken', createdRefreshToken, {
         httpOnly: true,
-        path: '/api/refresh_token',
+        path: '/api/auth/refresh_token',
         maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
         message: 'Registration successful',
-        createdAccessToken,
+        access_token: createdAccessToken,
         user: { ...newUser._doc, password: null },
     });
 });
@@ -64,7 +65,7 @@ const register = createAsyncError(async (req, res) => {
 const login = createAsyncError(async (req, res) => {
     const { email, password } = req.body;
 
-    const foundUser = await User.findOne({ email });
+    const foundUser = await User.findOne({ email }).populate('followers following', '-password');
 
     if (!foundUser) {
         return res.status(400).json({ message: 'User not exits' });
@@ -81,18 +82,59 @@ const login = createAsyncError(async (req, res) => {
 
     res.cookie('refreshToken', createdRefreshToken, {
         httpOnly: true,
-        path: '/api/refresh_token',
+        path: '/api/auth/refresh_token',
         maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
         message: 'Login successful',
-        createdAccessToken,
+        access_token: createdAccessToken,
         user: { ...foundUser._doc },
     });
+});
+
+// @desc Logout
+// @routes api/auth/logout
+// @access for Logout the user and clear cookies
+
+const logout = createAsyncError(async (req, res) => {
+    res.clearCookie('refreshToken', { path: '/api/auth/refresh_token' });
+    return res.status(200).json({ message: 'Logged out Successfully' });
+});
+
+// @desc Refresh
+// @routes api/auth/refresh
+// @access for refresh the cookie and generate it again
+
+const refresh = createAsyncError(async (req, res) => {
+    const rfToken = req.cookies.refreshToken;
+
+    if (!rfToken) {
+        return res.status(401).json({ message: 'UnAuthorized' });
+    }
+
+    const verifyRefreshToken = jwt.verify(rfToken, process.env.REFRESH_TOKEN_SECRET);
+
+    if (!verifyRefreshToken) {
+        return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const findUser = await User.findOne({ _id: verifyRefreshToken._id })
+        .select('-password')
+        .populate('followers following', '-password');
+
+    if (!findUser) {
+        return res.status(400).json({ message: 'User not found' });
+    }
+
+    const newAccessToken = generateAccessToken({ _id: findUser._id });
+
+    return res.status(200).json({ access_token: newAccessToken, user: findUser });
 });
 
 module.exports = {
     register,
     login,
+    logout,
+    refresh,
 };
