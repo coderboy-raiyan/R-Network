@@ -42,7 +42,9 @@
         "react/jsx-no-useless-fragment": 0,
         "import/no-extraneous-dependencies": 0,
         "global-require": 0,
-        "import/no-dynamic-require": 0
+        "import/no-dynamic-require": 0,
+        "react/no-unescaped-entities": 0,
+        "default-param-last": 0
     },
     "settings": {
         "import/resolver": {

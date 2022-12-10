@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 function App() {
     return (
         <main>
-            <input type="checkbox" id="theme" />
+            <input className="hidden" type="checkbox" id="theme" />
 
             <div className="App">
                 <div className="main">

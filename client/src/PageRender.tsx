@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 function generatePage(pageName: string | undefined) {
     const component = () => require(`./pages/${pageName}/${pageName}`).default;
+    console.log(`./pages/${pageName}/${pageName}`);
     try {
         return React.createElement(component());
     } catch (error) {
