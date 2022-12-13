@@ -12,12 +12,17 @@ function Login() {
         }));
     }
 
-    console.log(userData);
+    function handelSubmit(e: React.FormEvent) {
+        e.preventDefault();
+    }
 
     return (
-        <section>
-            <div className="my-10 flex justify-center">
-                <form className="flex w-full flex-col space-y-4 bg-white p-10 shadow md:w-[50%] lg:w-[60%]">
+        <section className="bg-gray-100">
+            <div className="mx-5 flex min-h-screen items-center justify-center md:mx-0 lg:mx-0">
+                <form
+                    onSubmit={handelSubmit}
+                    className="flex w-full flex-col space-y-4 bg-white p-10 shadow md:w-[50%] lg:w-[60%]"
+                >
                     <h3 className="text-center text-3xl font-semibold text-gray-500">R-Network</h3>
                     <label className="flex flex-col space-y-2" htmlFor="email">
                         <span className="text-sm font-semibold">Email address</span>
@@ -47,7 +52,7 @@ function Login() {
                     </label>
 
                     <button
-                        className="w-full rounded bg-slate-700 py-3 text-sm font-semibold text-white"
+                        className="w-full rounded bg-slate-500 py-3 text-sm font-semibold text-white"
                         type="button"
                     >
                         Login
