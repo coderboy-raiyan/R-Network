@@ -2,7 +2,7 @@ import NotifyTypes from "./notifyActionTypes";
 
 const initialState = {};
 
-function notifyReducer(state = initialState, action) {
+function notifyReducer(state = initialState, action: any) {
     switch (action.type) {
         case NotifyTypes.NOTIFY:
             return action.payload;

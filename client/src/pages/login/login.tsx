@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { login } from "redux/auth/authActions";
 
 function Login() {
     const [userData, setUserData] = useState({ email: "", password: "" });
+    const dispatch = useDispatch();
 
     function handelInputData(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -14,6 +17,7 @@ function Login() {
 
     function handelSubmit(e: React.FormEvent) {
         e.preventDefault();
+        dispatch(login(userData));
     }
 
     return (
@@ -53,7 +57,7 @@ function Login() {
 
                     <button
                         className="w-full rounded bg-slate-500 py-3 text-sm font-semibold text-white"
-                        type="button"
+                        type="submit"
                     >
                         Login
                     </button>
