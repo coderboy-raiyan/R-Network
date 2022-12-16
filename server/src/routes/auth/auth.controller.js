@@ -82,8 +82,9 @@ const login = createAsyncError(async (req, res) => {
 
     res.cookie('refreshToken', createdRefreshToken, {
         httpOnly: true,
-        path: '/api/auth/refresh_token',
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: 'None',
     });
 
     return res.status(200).json({
@@ -98,7 +99,11 @@ const login = createAsyncError(async (req, res) => {
 // @access for Logout the user and clear cookies
 
 const logout = createAsyncError(async (req, res) => {
-    res.clearCookie('refreshToken', { path: '/api/auth/refresh_token' });
+    res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+    });
     return res.status(200).json({ message: 'Logged out Successfully' });
 });
 
