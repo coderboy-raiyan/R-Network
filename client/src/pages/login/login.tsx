@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "redux/auth/authActions";
+import httpAuthServices from "services/httpAuthServices";
 
 function Login() {
     const [userData, setUserData] = useState({ email: "", password: "" });
@@ -15,9 +15,14 @@ function Login() {
         }));
     }
 
-    function handelSubmit(e: React.FormEvent) {
+    async function handelSubmit(e: React.FormEvent) {
         e.preventDefault();
-        dispatch(login(userData));
+        try {
+            const response = await httpAuthServices.login(userData);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

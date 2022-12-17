@@ -2,13 +2,13 @@ const jwt = require('jsonwebtoken');
 
 function generateAccessToken(payload) {
     return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1d',
+        expiresIn: '10s',
     });
 }
 
 function generateRefreshToken(payload) {
     return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: '30d',
+        expiresIn: '50s',
     });
 }
 module.exports = { generateAccessToken, generateRefreshToken };
